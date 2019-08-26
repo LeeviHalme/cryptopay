@@ -78,20 +78,42 @@ class CryptopayClient {
     });
   }
 
+  // Helper to parse errors into a more user-friendly format
+  async errorParser(error) {
+    console.log(
+      "There was an error while contacting Cryptopay API:",
+      error.message,
+      error.response &&
+        error.response.data &&
+        error.response.data.error &&
+        `(${error.response.data.error.message})`
+    );
+
+    return error.response.data;
+  }
+
   // Function to get all crypto rates
   async getAllRates() {
     return new Promise(async (resolve, reject) => {
       try {
         const response = await this.request("GET", "/api/rates", {});
 
-        console.log(response.data);
-        resolve();
+        resolve(response.data);
       } catch (error) {
-        console.log(
-          "There was an error while contacting Cryptopay API:",
-          error.message
-        );
-        reject(error.response ? error.response : error);
+        reject(this.errorParser(error));
+      }
+    });
+  }
+
+  // Function to get crypto pair rates
+  async getPairRate(pair) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await this.request("GET", `/api/rates/${pair}`, {});
+
+        resolve(response.data);
+      } catch (error) {
+        reject(this.errorParser(error));
       }
     });
   }
