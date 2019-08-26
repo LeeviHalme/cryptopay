@@ -1,0 +1,27 @@
+{
+  "name": "cryptopay",
+  "version": "1.0.0",
+  "description": "The unofficial Node.js library for the Cryptopay API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeeviHalme/cryptopay.git"
+  },
+  "keywords": [
+    "crypto",
+    "cryptopay",
+    "api"
+  ],
+  "author": "Leevi Halme <me@leevihal.me> (https://leevihal.me)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LeeviHalme/cryptopay/issues"
+  },
+  "homepage": "https://github.com/LeeviHalme/cryptopay#readme",
+  "dependencies": {
+    "axios": "^0.19.0"
+  }
+}
