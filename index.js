@@ -98,7 +98,7 @@ class CryptopayClient {
       try {
         const response = await this.request("GET", "/api/rates", {});
 
-        resolve(response.data);
+        resolve(response.data.data);
       } catch (error) {
         reject(this.errorParser(error));
       }
@@ -111,12 +111,64 @@ class CryptopayClient {
       try {
         const response = await this.request("GET", `/api/rates/${pair}`, {});
 
-        resolve(response.data);
+        resolve(response.data.data);
       } catch (error) {
         reject(this.errorParser(error));
       }
     });
   }
+
+  // Function to get crypto pair rates
+  async getPairRate(pair) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await this.request("GET", `/api/rates/${pair}`, {});
+
+        resolve(response.data.data);
+      } catch (error) {
+        reject(this.errorParser(error));
+      }
+    });
+  }
+
+  // Function to get user accounts
+  async getAccounts() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await this.request("GET", `/api/accounts`, {});
+
+        resolve(response.data.data);
+      } catch (error) {
+        reject(this.errorParser(error));
+      }
+    });
+  }
+
+  // Function to get user account transactions
+  async getAccountTransactions(accountId) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await this.request(
+          "GET",
+          `/api/accounts/${accountId}/transactions`,
+          {}
+        );
+
+        resolve(response.data.data);
+      } catch (error) {
+        reject(this.errorParser(error));
+      }
+    });
+  }
+
+  // Function to create payment channel (deposit address)
+  async createChannel({
+    pay_currency,
+    receiver_currency,
+    custom_id,
+    name,
+    description
+  }) {}
 }
 
 // Export class

@@ -38,7 +38,7 @@ None
 
 #### Returns
 
-- Promise (Object with `buy_rate` and `sell_rate` keys)
+- Promise (Multiple Objects with `buy_rate` and `sell_rate` keys)
 
 #### Example
 
@@ -70,6 +70,26 @@ client.getPairRate("BTCEUR").then(rate => {
 });
 ```
 
+### getAccounts()
+
+Get all user created accounts.
+
+#### Parameters
+
+None
+
+#### Returns
+
+- Promise (Array of `AccountObject`'s)
+
+#### Example
+
+```javascript
+client.getAccounts().then(accounts => {
+  //...do something with the accounts
+});
+```
+
 ### getAccountTransactions()
 
 Get all account transactions.
@@ -87,9 +107,11 @@ Get all account transactions.
 #### Example
 
 ```javascript
-client.getAccountTransactions("id here").then(transactions => {
-  //...do something with the transactions
-});
+client
+  .getAccountTransactions("91202339-52e2-432d-8078-12d49d96ce02")
+  .then(transactions => {
+    //...do something with the transactions
+  });
 ```
 
 ### createChannel()
@@ -163,12 +185,23 @@ Get all specific channel payments
 #### Example
 
 ```javascript
-client.getAllChannels().then(channels => {
-  //...do something with the channels
-});
+client
+  .getChannelPayments("50eb5775-f77e-4c64-870b-dc93624b5967")
+  .then(channels => {
+    //...do something with the channels
+  });
 ```
 
 ## Objects
+
+### AccountObject
+
+| Parameter  | Type   | Description                                                                                  |
+| ---------- | ------ | -------------------------------------------------------------------------------------------- |
+| id         | string | Account ID                                                                                   |
+| balance    | string | Account balance                                                                              |
+| currency   | string | Account currency                                                                             |
+| project_id | string | Project ID which the account belongs to. [Learn more](https://bit.ly/33XgI9q) about projects |
 
 ### TransactionObject
 
@@ -190,43 +223,43 @@ client.getAllChannels().then(channels => {
 
 ### ChannelObject
 
-| Parameter         | Type   | Description                                                                                                                                                       |
-| ----------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| id                | string | Channel ID                                                                                                                                                        |
-| name              | string | Channel name                                                                                                                                                      |
-| description       | string | Channel description                                                                                                                                               |
-| receiver_currency | string | The currency which all incoming transactions will be converted to                                                                                                 |
-| pay_currency      | string | The cryptocurrency which you want to accept                                                                                                                       |
-| address           | string | Channel cryptocurrency address                                                                                                                                    |
-| project_id        | string | Project ID. [Learn more](https://help.cryptopay.me/l/en/article/042y7gqlq0-what-is-a-project-and-how-to-manage-projects-in-your-corporate-account) about projects |
-| custom_id         | string | The channel reference ID in your system                                                                                                                           |
-| uri               | string | Channel URI. May be used for generating a QR code                                                                                                                 |
-| hosted_page_url   | string | Channel hosted page that renders channel details                                                                                                                  |
+| Parameter         | Type   | Description                                                       |
+| ----------------- | ------ | ----------------------------------------------------------------- |
+| id                | string | Channel ID                                                        |
+| name              | string | Channel name                                                      |
+| description       | string | Channel description                                               |
+| receiver_currency | string | The currency which all incoming transactions will be converted to |
+| pay_currency      | string | The cryptocurrency which you want to accept                       |
+| address           | string | Channel cryptocurrency address                                    |
+| project_id        | string | Project ID. [Learn more](https://bit.ly/33XgI9q) about projects   |
+| custom_id         | string | The channel reference ID in your system                           |
+| uri               | string | Channel URI. May be used for generating a QR code                 |
+| hosted_page_url   | string | Channel hosted page that renders channel details                  |
 
 ### PaymentObject
 
-| Parameter          | Type   | Description                                                                                                                                                |
-| ------------------ | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| id                 | string | Channel payment ID                                                                                                                                         |
-| paid_amount        | string | Cryptocurrency transaction amount that was received                                                                                                        |
-| paid_currency      | string | Cryptocurrency type                                                                                                                                        |
-| received_amount    | string | Amount credited to your Cryptopay account                                                                                                                  |
-| received_currency  | string | Account currency                                                                                                                                           |
-| fee                | string | Processing fee                                                                                                                                             |
-| fee_currency       | string | Processing fee currency                                                                                                                                    |
-| txid               | string | Cryptocurrency transaction ID on the blockchain                                                                                                            |
-| exchange           | object | Exchange details                                                                                                                                           |
-| -pair              | string | Currency pair                                                                                                                                              |
-| -rate              | string | Exchange rate                                                                                                                                              |
-| -fee               | string | Exchange fee                                                                                                                                               |
-| -fee_currency      | string | Exchange fee currency                                                                                                                                      |
-| status             | string | Channel payment status. Refer to [a list of channel payment statuses](https://developers.cryptopay.me/reference/payment-channels/channel-payment-statuses) |
-| custom_id          | string | Channel payment `custom_id` value inherited from its parent channel                                                                                        |
-| channel_id         | string | Channel ID                                                                                                                                                 |
-| address            | string | Channel cryptocurrency address                                                                                                                             |
-| risk               | Object | Cryptocurrency transaction risk level details                                                                                                              |
-| -score             | number | Transaction risk score                                                                                                                                     |
-| -level             | string | Transaction risk level. `low`, `medium` or `high` depending on the score value                                                                             |
-| -resource_name     | string | A resource name the transaction has been received from e.g. `Bitstamp`                                                                                     |
-| -resource_category | string | A resource category the transaction has been received from e.g. `Exchange`                                                                                 |
-| created_at         | string | Channel payment creation date and time                                                                                                                     |
+| Parameter          | Type   | Description                                                                                   |
+| ------------------ | ------ | --------------------------------------------------------------------------------------------- |
+| id                 | string | Channel payment ID                                                                            |
+| paid_amount        | string | Cryptocurrency transaction amount that was received                                           |
+| paid_currency      | string | Cryptocurrency type                                                                           |
+| received_amount    | string | Amount credited to your Cryptopay account                                                     |
+| received_currency  | string | Account currency                                                                              |
+| fee                | string | Processing fee                                                                                |
+| fee_currency       | string | Processing fee currency                                                                       |
+| txid               | string | Cryptocurrency transaction ID on the blockchain                                               |
+| exchange           | object | Exchange details                                                                              |
+| -pair              | string | Currency pair                                                                                 |
+| -rate              | string | Exchange rate                                                                                 |
+| -fee               | string | Exchange fee                                                                                  |
+| -fee_currency      | string | Exchange fee currency                                                                         |
+| status             | string | Channel payment status. Refer to [a list of channel payment statuses](https://bit.ly/2Nt0peO) |
+| custom_id          | string | Channel payment `custom_id` value inherited from its parent channel                           |
+| channel_id         | string | Channel ID                                                                                    |
+| address            | string | Channel cryptocurrency address                                                                |
+| risk               | Object | Cryptocurrency transaction risk level details                                                 |
+| -score             | number | Transaction risk score                                                                        |
+| -level             | string | Transaction risk level. `low`, `medium` or `high` depending on the score value                |
+| -resource_name     | string | A resource name the transaction has been received from e.g. `Bitstamp`                        |
+| -resource_category | string | A resource category the transaction has been received from e.g. `Exchange`                    |
+| created_at         | string | Channel payment creation date and time                                                        |
