@@ -192,6 +192,64 @@ client
   });
 ```
 
+### createCoinPayment()
+
+Create a coin withdrawal payment
+
+#### Parameters
+
+| Parameter         | Type   | Required | Description                                           |
+| ----------------- | ------ | :------: | ----------------------------------------------------- |
+| charged_currency  | string |    +     | An account currency to send a transaction from        |
+| received_currency | string |    +     | Cryptocurrency type                                   |
+| charged_amount    | number |    +     | All applicable fees will be deducted from this amount |
+| address           | string |    +     | A recipient's cryptocurrency wallet address           |
+| custom_id         | string |    +     | Payment reference ID in your system                   |
+
+#### Returns
+
+- Promise (`PaymentObject`)
+
+#### Example
+
+```javascript
+client
+  .createCoinPayment({
+    charged_currency: "EUR",
+    received_currency: "BTC",
+    charged_amount: 10,
+    address: "2N122JKRz52gokTmaVYNiMA43qvdSqnhLGV",
+    custom_id: "123456"
+  })
+  .then(payment => {
+    //...do something with the payment
+  });
+```
+
+### commitCoinPayment()
+
+Commit a coin withdrawal payment
+
+#### Parameters
+
+| Parameter  | Type   | Required | Description |
+| ---------- | ------ | :------: | ----------- |
+| Payment ID | string |    +     | Payment ID  |
+
+#### Returns
+
+- Promise (`PaymentObject`)
+
+#### Example
+
+```javascript
+client
+  .commitCoinPayment("50eb5775-f77e-4c64-870b-dc93624b5967")
+  .then(payment => {
+    //...do something with the payment
+  });
+```
+
 ## Objects
 
 ### AccountObject

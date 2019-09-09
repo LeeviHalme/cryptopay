@@ -118,24 +118,11 @@ class CryptopayClient {
     });
   }
 
-  // Function to get crypto pair rates
-  async getPairRate(pair) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const response = await this.request("GET", `/api/rates/${pair}`, {});
-
-        resolve(response.data.data);
-      } catch (error) {
-        reject(this.errorParser(error));
-      }
-    });
-  }
-
   // Function to get user accounts
   async getAccounts() {
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await this.request("GET", `/api/accounts`, {});
+        const response = await this.request("GET", "/api/accounts", {});
 
         resolve(response.data.data);
       } catch (error) {
@@ -166,9 +153,95 @@ class CryptopayClient {
     pay_currency,
     receiver_currency,
     custom_id,
-    name,
-    description
-  }) {}
+    name = "",
+    description = ""
+  }) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await this.request("POST", "/api/channels", {
+          pay_currency,
+          receiver_currency,
+          custom_id,
+          name,
+          description
+        });
+
+        resolve(response.data.data);
+      } catch (error) {
+        reject(this.errorParser(error));
+      }
+    });
+  }
+
+  // Function to get all user's payment channels
+  async getAllChannels() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await this.request("GET", "/api/channels", {});
+
+        resolve(response.data.data);
+      } catch (error) {
+        reject(this.errorParser(error));
+      }
+    });
+  }
+
+  // Function to get all channel's payments
+  async getChannelPayments(channelId) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await this.request(
+          "GET",
+          `/api/channels/${channelId}/payments`,
+          {}
+        );
+
+        resolve(response.data.data);
+      } catch (error) {
+        reject(this.errorParser(error));
+      }
+    });
+  }
+
+  // Function to create a coin payment
+  async createCoinPayment({
+    charged_currency,
+    received_currency,
+    charged_amount,
+    address,
+    custom_id
+  }) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await this.request("POST", "/api/coin_withdrawals", {
+          charged_currency,
+          received_currency,
+          charged_amount,
+          address,
+          custom_id
+        });
+
+        resolve(response.data.data);
+      } catch (error) {
+        reject(this.errorParser(error));
+      }
+    });
+  }
+
+  // Function to commit a coin payment
+  async commitCoinPayment(paymentId) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await this.request(
+          "POST",
+          `/api/coin_withdrawals/${paymentId}/commit`,
+          {}
+        );
+      } catch (error) {
+        reject(this.errorParser(error));
+      }
+    });
+  }
 }
 
 // Export class
