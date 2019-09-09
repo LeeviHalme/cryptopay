@@ -237,6 +237,8 @@ class CryptopayClient {
           `/api/coin_withdrawals/${paymentId}/commit`,
           {}
         );
+
+        resolve(response.data.data);
       } catch (error) {
         reject(this.errorParser(error));
       }
