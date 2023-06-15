@@ -3,7 +3,7 @@
 > The unofficial Node.js library for the [Cryptopay API](https://developers.cryptopay.me).
 
 [![npm version](https://badge.fury.io/js/cryptopay.svg)](https://badge.fury.io/js/cryptopay)
-[![dependencies](https://david-dm.org/leevihalme/cryptopay.svg)](https://david-dm.org/leevihalme/cryptopay.svg)
+![npm ci](https://github.com/LeeviHalme/cryptopay/actions/workflows/npm-publish.yml/badge.svg)
 
 ## Credentials
 
